@@ -13,6 +13,8 @@ const FRICTION: f32 = 0.05;
 
 pub struct Player {
     pos: Point2,
+    width: f32,
+    height: f32,
     velocity: Vector2,
     textures: Vec<Image>,
     pub movement: Movement,
@@ -22,6 +24,8 @@ impl Player {
     pub fn new(pos: Point2, textures: Vec<Image>) -> Self {
         Player {
             pos,
+            width: 32.0,
+            height: 32.0,
             velocity: Vector2::new(0.0, 0.0),
             textures,
             movement: Movement::new(),
@@ -49,6 +53,24 @@ impl Player {
 
         //Apply our speed
         self.pos += self.velocity*dt;
+
+        //Wrap aroud left and right bounds
+        if self.pos.x > 256.0 {
+            self.pos.x = 0.0 - self.width;
+        }
+        if self.pos.x + self.width < 0.0 {
+            self.pos.x = 256.0;
+        }
+
+        //Block at up and down bounds
+        if self.pos.y > 256.0 - self.width {
+            self.pos.y = 256.0 - self.width;
+            self.velocity.y = 0.0;
+        }
+        if self.pos.y < 0.0 {
+            self.pos.y = 0.0;
+            self.velocity.y = 0.0;
+        }
 
         //Apply friction
         self.velocity *= FRICTION.powf(dt);
