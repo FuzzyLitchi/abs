@@ -1,6 +1,8 @@
 extern crate ggez;
 use ggez::*;
 use ggez::event::{Keycode, Mod};
+use ggez::graphics;
+use ggez::graphics::Rect;
 
 mod player;
 use player::Player;
@@ -78,8 +80,16 @@ impl event::EventHandler for MainState {
 }
 
 pub fn main() {
-    let c = conf::Conf::new();
+    let mut c = conf::Conf::new();
+    c.window_mode.width = 512;
+    c.window_mode.height = 512;
+
     let ctx = &mut Context::load_from_conf("shana", "FuzzyLitchi", c).unwrap();
+    //Non blurry for pixel art
+    graphics::set_default_filter(ctx, graphics::FilterMode::Nearest);
+    //Scale
+    graphics::set_screen_coordinates(ctx, graphics::Rect::new(0.0, 0.0, 256.0, 256.0)).expect("This should really work");
+
     let state = &mut MainState::new(ctx).unwrap();
     event::run(ctx, state).unwrap();
 }
