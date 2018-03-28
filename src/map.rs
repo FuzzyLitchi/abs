@@ -15,7 +15,7 @@ impl Map {
                 Image::new(ctx, "/grass1.png").unwrap(),
                 Image::new(ctx, "/grass2.png").unwrap(),
                 Image::new(ctx, "/grass3.png").unwrap(),
-                Image::new(ctx, "/grass0.png").unwrap(), //gress4 looks bad
+                Image::new(ctx, "/grass0.png").unwrap(), //grass4 looks bad
             ],
             map: [
                 [0,1,0,4,2,0,1],
