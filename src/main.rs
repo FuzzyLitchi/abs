@@ -6,13 +6,20 @@ use ggez::graphics;
 mod map;
 use map::Map;
 
+mod player;
+use player::Player;
+
 struct MainState {
     map: Map,
+    player: Player,
 }
 
 impl MainState {
     fn new(ctx: &mut Context) -> GameResult<MainState> {
-        let s = MainState { map: Map::new(ctx) };
+        let s = MainState {
+            map: Map::new(ctx),
+            player: Player::default(ctx),
+        };
         Ok(s)
     }
 }
@@ -21,6 +28,7 @@ impl event::EventHandler for MainState {
     fn update(&mut self, ctx: &mut Context) -> GameResult<()> {
         let dt = timer::get_delta(ctx).subsec_nanos() as f32 / 1_000_000_000.0;
 
+        self.player.update(dt);
 
         Ok(())
     }
@@ -29,6 +37,8 @@ impl event::EventHandler for MainState {
         graphics::clear(ctx);
 
         self.map.draw(ctx);
+
+        self.player.draw(ctx);
 
         graphics::present(ctx);
         Ok(())
@@ -42,7 +52,7 @@ impl event::EventHandler for MainState {
         _repeat: bool
     ) {
         //Player movement code
-        /*if keycode == Keycode::W {
+        if keycode == Keycode::W {
             self.player.movement.enable_up();
         }
         if keycode == Keycode::A {
@@ -53,7 +63,7 @@ impl event::EventHandler for MainState {
         }
         if keycode == Keycode::D {
             self.player.movement.enable_right();
-        }*/
+        }
     }
     fn key_up_event(
         &mut self,
@@ -63,7 +73,7 @@ impl event::EventHandler for MainState {
         _repeat: bool
     ) {
         //Player movement code
-        /*if keycode == Keycode::W {
+        if keycode == Keycode::W {
             self.player.movement.disable_up();
         }
         if keycode == Keycode::A {
@@ -74,7 +84,7 @@ impl event::EventHandler for MainState {
         }
         if keycode == Keycode::D {
             self.player.movement.disable_right();
-        }*/
+        }
     }
 }
 
