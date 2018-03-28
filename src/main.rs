@@ -2,18 +2,17 @@ extern crate ggez;
 use ggez::*;
 use ggez::event::{Keycode, Mod};
 use ggez::graphics;
-use ggez::graphics::Rect;
 
-mod player;
-use player::Player;
+mod map;
+use map::Map;
 
 struct MainState {
-    player: Player,
+    map: Map,
 }
 
 impl MainState {
     fn new(ctx: &mut Context) -> GameResult<MainState> {
-        let s = MainState { player: Player::default(ctx) };
+        let s = MainState { map: Map::new(ctx) };
         Ok(s)
     }
 }
@@ -21,7 +20,7 @@ impl MainState {
 impl event::EventHandler for MainState {
     fn update(&mut self, ctx: &mut Context) -> GameResult<()> {
         let dt = timer::get_delta(ctx).subsec_nanos() as f32 / 1_000_000_000.0;
-        self.player.update(dt);
+
 
         Ok(())
     }
@@ -29,7 +28,7 @@ impl event::EventHandler for MainState {
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         graphics::clear(ctx);
 
-        self.player.draw(ctx);
+        self.map.draw(ctx);
 
         graphics::present(ctx);
         Ok(())
@@ -43,7 +42,7 @@ impl event::EventHandler for MainState {
         _repeat: bool
     ) {
         //Player movement code
-        if keycode == Keycode::W {
+        /*if keycode == Keycode::W {
             self.player.movement.enable_up();
         }
         if keycode == Keycode::A {
@@ -54,7 +53,7 @@ impl event::EventHandler for MainState {
         }
         if keycode == Keycode::D {
             self.player.movement.enable_right();
-        }
+        }*/
     }
     fn key_up_event(
         &mut self,
@@ -64,7 +63,7 @@ impl event::EventHandler for MainState {
         _repeat: bool
     ) {
         //Player movement code
-        if keycode == Keycode::W {
+        /*if keycode == Keycode::W {
             self.player.movement.disable_up();
         }
         if keycode == Keycode::A {
@@ -75,7 +74,7 @@ impl event::EventHandler for MainState {
         }
         if keycode == Keycode::D {
             self.player.movement.disable_right();
-        }
+        }*/
     }
 }
 
@@ -88,7 +87,7 @@ pub fn main() {
     //Non blurry for pixel art
     graphics::set_default_filter(ctx, graphics::FilterMode::Nearest);
     //Scale
-    graphics::set_screen_coordinates(ctx, graphics::Rect::new(0.0, 0.0, 256.0, 256.0)).expect("This should really work");
+    graphics::set_screen_coordinates(ctx, graphics::Rect::new(0.0, 0.0, 112.0, 112.0)).expect("This should really work");
 
     let state = &mut MainState::new(ctx).unwrap();
     event::run(ctx, state).unwrap();
