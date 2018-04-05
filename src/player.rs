@@ -3,6 +3,8 @@ use ggez::graphics;
 use ggez::graphics::Image;
 use ggez::graphics::Point2;
 
+use camera::Camera;
+
 pub struct Player {
     pos: Point2,
     //width:  16px,
@@ -43,15 +45,18 @@ impl Player {
         }
     }
 
-    pub fn draw(&self, ctx: &mut Context) {
-        let mut point = self.pos.clone() * 16.0;
-        point.x += 8.0;
-        point.y += 8.0;
+    pub fn draw(&self, ctx: &mut Context, camera: &Camera) {
+        let (mut x, mut y) = (self.pos.x, self.pos.y);
+        x += -camera.x as f32 + 0.5;
+        y += -camera.y as f32 + 0.5;
+
+        x *= 16.0;
+        y *= 16.0;
 
         graphics::circle(
             ctx,
             graphics::DrawMode::Fill,
-            point,
+            Point2::new(x, y),
             8.0,
             1.0,
         ).unwrap();
