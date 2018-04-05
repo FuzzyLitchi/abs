@@ -2,9 +2,11 @@ use ggez::Context;
 use ggez::graphics;
 use ggez::graphics::{Image, Point2};
 
+use camera::Camera;
+
 pub struct Map {
     textures: Vec<Image>,
-    map: [[usize; 7]; 7]
+    map: Vec<Vec<usize>>,
 }
 
 impl Map {
@@ -17,24 +19,31 @@ impl Map {
                 Image::new(ctx, "/grass3.png").unwrap(),
                 Image::new(ctx, "/grass0.png").unwrap(), //grass4 looks bad
             ],
-            map: [
-                [0,1,0,4,2,0,1],
-                [2,0,2,4,3,2,0],
-                [1,0,3,4,2,2,0],
-                [0,2,0,4,1,2,0],
-                [2,1,3,4,2,1,3],
-                [0,3,1,4,0,2,0],
-                [2,1,3,4,2,1,3],
+            map: vec![
+                vec![1,1,1,1,1,1,1],
+                vec![2,0,2,4,3,2,0],
+                vec![1,0,3,4,2,2,0],
+                vec![0,2,0,4,1,2,0],
+                vec![2,1,3,4,2,1,3],
+                vec![0,3,1,4,0,2,0],
+                vec![0,1,3,4,2,1,0],
             ]
         }
     }
 
-    pub fn draw(&self, ctx: &mut Context) {
-        for (y, rows) in self.map.iter().enumerate() {
-            for (x, id) in rows.iter().enumerate() {
+    fn get(&self, x: usize, y: usize) -> Option<usize> {
+        match self.map.get(y) {
+            Some(some) => some.get(x).cloned(),
+            None => None,
+        }
+    }
+
+    pub fn draw(&self, ctx: &mut Context, camera: &Camera) {
+        for x in 0..camera.width {
+            for y in 0..camera.height {
                 graphics::draw(
                     ctx,
-                    &self.textures[*id],
+                    &self.textures[self.get((x + camera.x) as usize, (y + camera.y) as usize).unwrap_or(0)],
                     Point2::new((x*16) as f32, (y*16) as f32),
                     0.0
                 ).unwrap();
