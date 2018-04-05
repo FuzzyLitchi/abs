@@ -9,9 +9,13 @@ use map::Map;
 mod player;
 use player::Player;
 
+mod camera;
+use camera::Camera;
+
 struct MainState {
     map: Map,
     player: Player,
+    camera: Camera,
 }
 
 impl MainState {
@@ -19,6 +23,7 @@ impl MainState {
         let s = MainState {
             map: Map::new(ctx),
             player: Player::default(ctx),
+            camera: Camera::new(),
         };
         Ok(s)
     }
@@ -36,7 +41,7 @@ impl event::EventHandler for MainState {
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         graphics::clear(ctx);
 
-        self.map.draw(ctx);
+        self.map.draw(ctx, &self.camera);
 
         self.player.draw(ctx);
 
