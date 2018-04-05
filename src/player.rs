@@ -24,17 +24,22 @@ impl Player {
     }
 
     pub fn update(&mut self, dt: f32) {
-        if self.movement.up {
-            self.pos.y -= 1.0;
-        }
-        if self.movement.left {
-            self.pos.x -= 1.0;
-        }
-        if self.movement.down {
-            self.pos.y += 1.0;
-        }
-        if self.movement.right {
-            self.pos.x += 1.0;
+        self.movement.update(dt);
+
+        if self.movement.can_move {
+            if self.movement.up {
+                self.pos.y -= 1.0;
+                self.movement.cant_move();
+            } else if self.movement.left {
+                self.pos.x -= 1.0;
+                self.movement.cant_move();
+            } else if self.movement.down {
+                self.pos.y += 1.0;
+                self.movement.cant_move();
+            } else if self.movement.right {
+                self.pos.x += 1.0;
+                self.movement.cant_move();
+            }
         }
     }
 
@@ -58,6 +63,10 @@ pub struct Movement {
     right: bool,
     down:  bool,
     left:  bool,
+
+    time: f32,
+    move_delay: f32,
+    can_move: bool
 }
 
 impl Movement {
@@ -67,7 +76,23 @@ impl Movement {
             right: false,
             down: false,
             left: false,
+
+            time: 0.0,
+            move_delay: 0.2,
+            can_move: true,
         }
+    }
+
+    fn update(&mut self, dt: f32) {
+        self.time += dt;
+        if self.time > self.move_delay {
+            self.can_move = true;
+        }
+    }
+
+    fn cant_move(&mut self) {
+        self.time = 0.0;
+        self.can_move = false;
     }
 
     pub fn enable_up(&mut self) {
