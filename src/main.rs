@@ -43,7 +43,7 @@ impl event::EventHandler for MainState {
 
         self.map.draw(ctx, &self.camera);
 
-        self.player.draw(ctx);
+        self.player.draw(ctx, &self.camera);
 
         graphics::present(ctx);
         Ok(())
