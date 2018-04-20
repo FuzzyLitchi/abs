@@ -12,6 +12,8 @@ use player::Player;
 mod camera;
 use camera::Camera;
 
+mod entity;
+
 struct MainState {
     map: Map,
     player: Player,
