@@ -1,12 +1,16 @@
 use ggez::Context;
 use ggez::graphics;
 use ggez::graphics::{Image, Point2};
+use entity::Entity;
+
+use std::collections::HashMap;
 
 use camera::Camera;
 
 pub struct Map {
     textures: Vec<Image>,
     map: Vec<Vec<usize>>,
+    entities: Vec<Entity>,
 }
 
 impl Map {
@@ -27,7 +31,8 @@ impl Map {
                 vec![2,1,3,4,2,1,3],
                 vec![0,3,1,4,0,2,0],
                 vec![0,1,3,4,2,1,0],
-            ]
+            ],
+            entities: vec![Entity::new(4,4)],
         }
     }
 
@@ -39,6 +44,7 @@ impl Map {
     }
 
     pub fn draw(&self, ctx: &mut Context, camera: &Camera) {
+        //Draw background
         for x in 0..camera.width {
             for y in 0..camera.height {
                 graphics::draw(
@@ -48,6 +54,11 @@ impl Map {
                     0.0
                 ).unwrap();
             }
+        }
+
+        //Draw entities
+        for entity in &self.entities {
+            entity.draw(ctx, &camera);
         }
     }
 }
