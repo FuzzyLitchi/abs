@@ -5,3 +5,4 @@ authors = ["Emile Yvan Boutet Livoff <10896365+FuzzyLitchi@users.noreply.github.
 
 [dependencies]
 ggez = "0.4"
+byteorder = "1"
