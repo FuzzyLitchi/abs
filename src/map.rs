@@ -17,20 +17,21 @@ impl Map {
     pub fn new(ctx: &mut Context) -> Map {
         Map {
             textures: vec![
+                Image::new(ctx, "/error.png").unwrap(),
                 Image::new(ctx, "/grass0.png").unwrap(),
                 Image::new(ctx, "/grass1.png").unwrap(),
                 Image::new(ctx, "/grass2.png").unwrap(),
                 Image::new(ctx, "/grass3.png").unwrap(),
-                Image::new(ctx, "/grass0.png").unwrap(), //grass4 looks bad
+                Image::new(ctx, "/grass1.png").unwrap(), //grass4 looks bad
             ],
             map: vec![
-                vec![1,1,1,1,1,1,1],
-                vec![2,0,2,4,3,2,0],
-                vec![1,0,3,4,2,2,0],
-                vec![0,2,0,4,1,2,0],
-                vec![2,1,3,4,2,1,3],
-                vec![0,3,1,4,0,2,0],
-                vec![0,1,3,4,2,1,0],
+                vec![2,2,2,2,2,2,2],
+                vec![3,1,3,5,4,3,1],
+                vec![2,1,4,5,3,3,1],
+                vec![1,3,1,5,2,3,1],
+                vec![3,2,4,5,3,2,4],
+                vec![1,4,2,5,1,3,1],
+                vec![1,2,4,5,2,2,1],
             ],
             entities: vec![Entity::new(4,4)],
         }

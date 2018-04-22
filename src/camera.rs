@@ -16,4 +16,9 @@ impl Camera {
             height: 7,
         }
     }
+
+    pub fn update(&mut self, x: i64, y: i64) {
+        self.x = x - self.width/2; //Interger divison rounds down
+        self.y = y - self.width/2;
+    }
 }
