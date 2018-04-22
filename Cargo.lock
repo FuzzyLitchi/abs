@@ -844,6 +844,7 @@ dependencies = [
 name = "shana"
 version = "0.1.0"
 dependencies = [
+ "byteorder 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ggez 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

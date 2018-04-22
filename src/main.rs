@@ -3,6 +3,9 @@ use ggez::*;
 use ggez::event::{Keycode, Mod};
 use ggez::graphics;
 
+extern crate byteorder;
+use std::fs::File;
+
 mod map;
 use map::Map;
 
@@ -23,7 +26,7 @@ struct MainState {
 impl MainState {
     fn new(ctx: &mut Context) -> GameResult<MainState> {
         let s = MainState {
-            map: Map::new(ctx),
+            map: Map::from_file(ctx, File::open("resources/test.map").unwrap()),
             player: Player::default(ctx),
             camera: Camera::new(),
         };

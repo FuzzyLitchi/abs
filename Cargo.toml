@@ -5,3 +5,4 @@ authors = ["Polly Nielsen Boutet-Livoff <10896365+FuzzyLitchi@users.noreply.gith
 
 [dependencies]
 ggez = "0.4"
+byteorder = "1"
