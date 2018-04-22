@@ -35,7 +35,7 @@ impl event::EventHandler for MainState {
     fn update(&mut self, ctx: &mut Context) -> GameResult<()> {
         let dt = timer::get_delta(ctx).subsec_nanos() as f32 / 1_000_000_000.0;
 
-        self.player.update(dt);
+        self.player.update(dt, &mut self.camera);
 
         Ok(())
     }

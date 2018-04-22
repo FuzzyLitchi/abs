@@ -6,7 +6,8 @@ use ggez::graphics::Point2;
 use camera::Camera;
 
 pub struct Player {
-    pos: Point2,
+    x: i64,
+    y: i64,
     //width:  16px,
     //height: 16px,
     //textures: Vec<Image>, Later
@@ -14,39 +15,44 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn new(pos: Point2) -> Self {
+    pub fn new(x: i64, y: i64) -> Self {
         Player {
-            pos,
+            x,
+            y,
             movement: Movement::new(),
         }
     }
 
     pub fn default(_ctx: &mut Context) -> Self {
-        Player::new(Point2::new(0.0, 0.0))
+        Player::new(0, 0)
     }
 
-    pub fn update(&mut self, dt: f32) {
+    pub fn update(&mut self, dt: f32, camera: &mut Camera) {
         self.movement.update(dt);
 
         if self.movement.can_move {
             if self.movement.up {
-                self.pos.y -= 1.0;
+                self.y -= 1;
                 self.movement.cant_move();
+                camera.update(self.x, self.y);
             } else if self.movement.left {
-                self.pos.x -= 1.0;
+                self.x -= 1;
                 self.movement.cant_move();
+                camera.update(self.x, self.y);
             } else if self.movement.down {
-                self.pos.y += 1.0;
+                self.y += 1;
                 self.movement.cant_move();
+                camera.update(self.x, self.y);
             } else if self.movement.right {
-                self.pos.x += 1.0;
+                self.x += 1;
                 self.movement.cant_move();
+                camera.update(self.x, self.y);
             }
         }
     }
 
     pub fn draw(&self, ctx: &mut Context, camera: &Camera) {
-        let (mut x, mut y) = (self.pos.x, self.pos.y);
+        let (mut x, mut y) = (self.x as f32, self.y as f32);
         x += -camera.x as f32 + 0.5;
         y += -camera.y as f32 + 0.5;
 
