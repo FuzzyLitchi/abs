@@ -1,4 +1,12 @@
 [[package]]
+name = "abs"
+version = "0.1.0"
+dependencies = [
+ "byteorder 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ggez 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "adler32"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -838,14 +846,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "proc-macro2 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "syn 0.12.14 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "shana"
-version = "0.1.0"
-dependencies = [
- "byteorder 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "ggez 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
